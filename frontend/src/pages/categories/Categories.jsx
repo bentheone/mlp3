@@ -28,8 +28,17 @@ const Categories = () => {
         }
     };
     const handleDelete = (category) => {
-        setSelectedCategory(category);
-        setShowModal(true);
+        const confirmDelete = window.confirm(`Are you sure you want to delete the ${category.name} category?`);
+        if(!confirmDelete) return;
+
+        try {
+            axios.delete(`http://localhost:5000/api/categories/${category.id}`, {
+                headers: {Authorization: `Bearer ${token}`}
+            });
+            fetchCategories();
+        } catch (err) {
+            console.error('Failed to delete category!', err);
+        }
     };
     useEffect(()=> {
         fetchCategories();
@@ -109,7 +118,7 @@ const Categories = () => {
                                     <td className="py-2 text-center">{cat.name}</td>
                                     <td className="py-2 text-center">{cat.description}</td>
                                     <td className="py-2 flex gap-2">
-                                        <button className="bg-blue-500 px-2 py-1 rounded hover:bg-blue-600 cursor-pointer">Edit</button>
+                                        <button className="bg-blue-500 px-2 py-1 rounded hover:bg-blue-600 cursor-pointer" onClick={() => navigate(`/categories/${cat.id}`)}>Edit</button>
                                         <button className="bg-red-500 px-2 py-1 rounded hover:bg-red-600 cursor-pointer" onClick={() => handleDelete(cat)}>Delete</button>
                                     </td>
                                 </tr>

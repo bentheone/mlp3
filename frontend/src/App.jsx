@@ -6,6 +6,7 @@ import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import Products from './pages/products/Products'
 import Categories from './pages/categories/Categories'
+import EditCategory from './pages/categories/EditCategory'
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path='/dashboard' element={<Dashboard/>} />
         <Route path='/products' element={<Products/>} />
         <Route path='/categories' element={<Categories/>} />
+        <Route path='/categories/:id' element={<EditCategory/>} />
       </Routes>
     </Router>
     </>
